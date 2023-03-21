@@ -4,14 +4,16 @@ public class Tile {
     private int neighbourMineCount;
 
     public Tile(){
+
         tileStatus = TileStatus.covered;
     }
 
-    public String returnValue(){
-        if (hasMine){
+    public String returnValue() {
+        if (hasMine) {
             return "*";
+        } else {
+            return (String.valueOf(neighbourMineCount));
         }
-        return "";
     }
 
     public TileStatus getTileStatus() {
