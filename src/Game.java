@@ -1,10 +1,13 @@
 public class Game {
     private GameStatus gameStatus;
+    private GameVisual gameVisual;
+
 
     public Game(){
 
+
     }
-    public Board printBoard(){
-        return null;
-    }
+
+
+
 }

@@ -4,16 +4,27 @@ public class Tile {
     private int neighbourMineCount;
 
     public Tile(){
-
         tileStatus = TileStatus.covered;
+        neighbourMineCount = 0;
     }
 
     public String returnValue() {
-        if (hasMine) {
-            return "*";
-        } else {
-            return (String.valueOf(neighbourMineCount));
+        String value = null;
+        if (tileStatus.equals("covered")) {
+            value = "□";
         }
+        else if (tileStatus.equals("flagged")) {
+            value = "\uD83C\uDFF3";
+        }
+        else if (tileStatus.equals("uncovered")) {
+            if (hasMine) {
+                value = "*";
+            }
+            else {
+                value = String.valueOf(neighbourMineCount);
+            }
+        }
+        return value;
     }
 
     public TileStatus getTileStatus() {
@@ -24,7 +35,7 @@ public class Tile {
         this.tileStatus = tileStatus;
     }
 
-    public boolean isHasMine() {
+    public boolean getHasMine() {
         return hasMine;
     }
 
