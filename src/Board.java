@@ -41,11 +41,10 @@ public class Board {
 
     public void reset(){
         for (int row = 0; row< nrOfRows; row++) {
-            for (int column = 0; column <nrOfColumns; column++) {
+            for (int column = 0; column < nrOfColumns; column++) {
                 grid[row][column].setTileStatus("covered");
             }
         }
-        allocateBombs();
     }
 
     /* don't need this, just generate the board after first click
@@ -55,8 +54,13 @@ public class Board {
 
     public boolean clickTile(int row, int column){
         if (grid[row-1][column-1].getHasMine()) {
+            System.out.println("You lost");
             return false;
         }
+        //still implement
+        else if (grid[row-1][column-1].getNeighbourMineCount() == 0) {
+            grid[row - 1][column - 1].setTileStatus("uncovered");
+            return true;}
         else {
             grid[row - 1][column - 1].setTileStatus("uncovered");
             return true;
@@ -72,9 +76,9 @@ public class Board {
     }
 
     //add to the arraylist the coordinates of clicked tile
-    public void allocateBombs(){
+    public void allocateBombs(int selectedRow, int selectedColumn){
         ArrayList<String> tileNrs = new ArrayList<String>();
-
+        tileNrs.add(String.valueOf(selectedRow+selectedColumn));
         for (int i=0; i<nrOfBombs;i++) {
             Random rand = new Random();
             int row = rand.nextInt(nrOfRows);
