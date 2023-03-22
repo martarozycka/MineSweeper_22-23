@@ -10,7 +10,7 @@ public class GameVisual {
         Tile[][] grid = board.getGrid();
         int verticalIndex = 1;
         for (int i=0; i<board.getHeight(); i++) {
-            System.out.print(verticalIndex + "  ");
+            System.out.println(verticalIndex + "  ");
             verticalIndex++;
             for (int j=0; j< board.getLength();j++) {
                 System.out.print(grid[i][j].returnValue());
