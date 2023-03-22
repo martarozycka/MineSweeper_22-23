@@ -15,10 +15,12 @@ public class GameVisual {
             for (int j=0; j< board.getLength();j++) {
                 System.out.print(grid[i][j].returnValue());
             }
+            System.out.println();
         }
-        for (int l=1; l< board.getLength(); l++) {
+        System.out.print("   ");
+        for (int l=1; l<= board.getLength(); l++) {
             System.out.print(l + " ");
-            l++;
+            ;
         }
     }
 

@@ -10,6 +10,11 @@ public class Board {
         this.height=height;
         this.length=length;
         grid = new Tile[height][length];
+        for (int i=0; i<height; i++){
+            for (int j=0; j<length; j++){
+                grid[i][j]=new Tile();
+            }
+        }
         clicked = false;
     }
 
