@@ -4,7 +4,7 @@ public class Tile {
     private int neighbourMineCount;
 
     public Tile(){
-        tileStatus = TileStatus.covered;
+        tileStatus = TileStatus.valueOf("covered");
         neighbourMineCount = 0;
     }
 
