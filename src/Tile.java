@@ -9,11 +9,8 @@ public class Tile {
     }
 
     public String returnValue() {
-        String value = null;
-        if (tileStatus.equals("covered")) {
-            value = "□";
-        }
-        else if (tileStatus.equals("flagged")) {
+        String value = "□ ";
+        if (tileStatus.equals("flagged")) {
             value = "\uD83C\uDFF3";
         }
         else if (tileStatus.equals("uncovered")) {
