@@ -17,9 +17,6 @@ public class Tile {
             if (hasMine) {
                 value = "\uD83D\uDCA3 ";
             }
-            else if (neighbourMineCount == 0) {
-                value = "⬛ ";
-            }
             else {
                 value = String.valueOf(neighbourMineCount + "  ");
             }

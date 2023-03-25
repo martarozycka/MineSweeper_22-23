@@ -22,6 +22,42 @@ public class Board {
         }
     }
 
+    public Board(String level) {
+        if (level.equals("easy")) {
+            nrOfBombs = 10;
+            nrOfColumns = 8;
+            nrOfRows = 8;
+            grid = new Tile[8][8];
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    grid[i][j] = new Tile();
+                }
+            }
+        }
+        else if (level.equals("medium")) {
+            nrOfBombs = 40;
+            nrOfColumns = 16;
+            nrOfRows = 16;
+            grid = new Tile[16][16];
+            for (int i = 0; i < 16; i++) {
+                for (int j = 0; j < 18; j++) {
+                    grid[i][j] = new Tile();
+                    }
+            }
+        }
+        else if (level.equals("hard")) {
+            nrOfBombs = 99;
+            nrOfColumns = 30;
+            nrOfRows = 16;
+            grid = new Tile[16][30];
+            for (int i = 0; i < 16; i++) {
+                for (int j = 0; j < 30; j++) {
+                    grid[i][j] = new Tile();
+                }
+            }
+        }
+    }
+
     public Tile[][] getGrid() {
         return grid;
     }
@@ -47,24 +83,34 @@ public class Board {
         }
     }
 
-    /* don't need this, just generate the board after first click
-    public void moveBomb(int row, int column){
-    }
-     */
-
+    //returns false when clicked on a mine, else returns true
     public boolean clickTile(int row, int column){
         if (grid[row-1][column-1].getHasMine()) {
-            System.out.println("You lost");
             return false;
         }
         //still implement
         else if (grid[row-1][column-1].getNeighbourMineCount() == 0) {
             grid[row - 1][column - 1].setTileStatus("uncovered");
+//            for (int y: distanceY) {
+//                for (int x : distanceX) {
+//                    if (row+y>=0 & row+y<nrOfColumns & column+x>=0 & column+x<nrOfColumns) {
+//                        if (x!=0 || y!=0) {
+//                            if (!grid[row+y][column+x].getHasMine()) {
+//                                clickTile(row+y, column+y);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             return true;}
         else {
             grid[row - 1][column - 1].setTileStatus("uncovered");
             return true;
         }
+    }
+
+    public void recursiveOpen(int row, int column) {
+
     }
 
     public void setFlag(int row, int column){
@@ -126,16 +172,6 @@ public class Board {
             }
         }
     }
-/*
-    public void populateBoard() {
-        Tile tile = new Tile();
-        for (int i = 0; i< nrOfRows; i++) {
-            for (int j = 0; j< nrOfColumns; j++) {
-                grid[i][j+1] = tile;
-            }
-        }
-    }
 
- */
     //recursive function????
 }
