@@ -23,24 +23,13 @@ public class Board {
     }
 
     public Board(String level) {
-        if (level.equals("easy")) {
-            nrOfBombs = 10;
-            nrOfColumns = 8;
-            nrOfRows = 8;
-            grid = new Tile[8][8];
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    grid[i][j] = new Tile();
-                }
-            }
-        }
-        else if (level.equals("medium")) {
+        if (level.equals("medium")) {
             nrOfBombs = 40;
             nrOfColumns = 16;
             nrOfRows = 16;
             grid = new Tile[16][16];
             for (int i = 0; i < 16; i++) {
-                for (int j = 0; j < 18; j++) {
+                for (int j = 0; j < 16; j++) {
                     grid[i][j] = new Tile();
                     }
             }
@@ -52,6 +41,17 @@ public class Board {
             grid = new Tile[16][30];
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 30; j++) {
+                    grid[i][j] = new Tile();
+                }
+            }
+        }
+        else {
+            nrOfBombs = 10;
+            nrOfColumns = 8;
+            nrOfRows = 8;
+            grid = new Tile[8][8];
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
                     grid[i][j] = new Tile();
                 }
             }

@@ -23,31 +23,14 @@ public class GameVisual {
     }
 
     public static void main(String[] args) {
-        Board minefield = new Board(10, 8, 8);
+        Board minefield = new Board("hard");
+       // System.out.println(minefield.getGrid());
         GameVisual minesweeper = new GameVisual(minefield);
-        minefield.clickTile(6,6);
-        minefield.allocateBombs(6,6);
-        minefield.setNeighbouringMineCounter();
-        minefield.setFlag(1,1);
-        minefield.clickTile(1,6);
-        minefield.clickTile(2,6);
-        minefield.clickTile(3,6);
-        minefield.clickTile(4,6);
-        minefield.clickTile(5,6);
-        minefield.clickTile(6,6);
-        minefield.clickTile(7,6);
-        minefield.clickTile(8,6);
-        minefield.clickTile(1,4);
-        minefield.clickTile(2,4);
-        minefield.clickTile(3,4);
-        minefield.clickTile(4,4);
-        minefield.clickTile(5,4);
-        minefield.clickTile(6,4);
-        minefield.clickTile(7,4);
-        minefield.clickTile(8,4);
-
-        //minefield.setAllUncovered();
-
+//        minefield.clickTile(6,6);
+//        minefield.allocateBombs(6,6);
+//        minefield.setNeighbouringMineCounter();
+//        minefield.setFlag(1,1);
+//        minefield.clickTile(1,6);
         minesweeper.printGameBoard(minefield);
 
     }
