@@ -90,6 +90,8 @@ public class UserInput {
             else if(flag!="yes"||flag!="no"){
                 System.out.print("INVALID ANSWER");
             }
+
+
             if (newBoard.checkForFlags(level)){
                 System.out.print("\n REMOVE FLAG (yes or no):\t");
                 String removeFlag = user.userInput();
@@ -100,11 +102,11 @@ public class UserInput {
                     newBoard.removeFlag(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
                     newGameVisual.printGameBoard(newBoard);
                 }}
+                if(removeFlag!="yes"||flag!="no"){
+                        System.out.print("INVALID ANSWER");
+                    }
             }
-            }
-
-
         }
-    }
+    }}
 
 
