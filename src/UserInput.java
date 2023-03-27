@@ -1,82 +1,110 @@
 import java.io.BufferedReader;
+import java.sql.Array;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class UserInput {
     private GameStatus gameStatus;
     private GameVisual gameVisual;
-    private int userInput;
     private Board newBoard;
 
     public UserInput(){
 
     }
-    public void play(Scanner sc){
-       while(sc.hasNextInt()){
-           gameStatus.equals(GameStatus.play);
-       }
+
+    public String userInput(){
+        Scanner sc=new Scanner(System.in);
+        String userInput=sc.nextLine();
+        return userInput;
+    }
+    public void lose(){
+        System.out.println("YOU LOST");
     }
 
 
 
 
     public static void main(String[] args) {
+        UserInput user = new UserInput();
 
-        Scanner sc1 = new Scanner(System.in);
-        Scanner sc2 = new Scanner(System.in);
-        Scanner sc3=new Scanner(System.in);
-
-        System.out.println("ENTER nrOfBombs, height,length: ");
-        int nrBombs=sc1.nextInt();
-        int height=sc1.nextInt();
-        int length=sc1.nextInt();
-        Board newBoard= new Board(nrBombs, height,length);
-        GameVisual newGameVisual=new GameVisual(newBoard);
+        System.out.println("ENTER LEVEL(easy, medium, difficult): ");
+        String level = user.userInput();
+        Board newBoard = new Board(level);
+        GameVisual newGameVisual = new GameVisual(newBoard);
         newGameVisual.printGameBoard(newBoard);
 
-        System.out.println("\n Set Flag (yes or no):\t");
-        String flag=sc2.nextLine();
-        if (flag.equals("yes")) {
-            int x = sc2.nextInt();
-            int y = sc2.nextInt();
-            newBoard.setFlag(x, y);
+        System.out.print("\n ENTER CELL COORDINATES (row column):\t");
+
+        String xy = user.userInput();
+        String[] strArr = xy.split("\s+");
+        newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
+        newBoard.setNeighbouringMineCounter();
+
+        //checking if first click is a bomb
+        while(!newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]))){
+            newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
+            newBoard.setNeighbouringMineCounter();
+            newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
             newGameVisual.printGameBoard(newBoard);
         }
+        newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
+        newGameVisual.printGameBoard(newBoard);
+        //game continues till a bomb is uncovered
 
-        else{
-            System.out.println("\n ENTER CELL COORDINATES(x y):\t");
-            int x= sc3.nextInt();
-            int y= sc3.nextInt();
-            newBoard.clickTile(x,y);
-            newGameVisual.printGameBoard(newBoard);
+        while (newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]))) {
 
-            while (newBoard.clickTile(x,y)==true){
-                System.out.println("\n Set Flag (yes or no):\t");
-                String flag1=sc2.nextLine();
-                if (flag.equals("yes")) {
-                    int x1 = sc2.nextInt();
-                    int y1= sc2.nextInt();
-                    newBoard.setFlag(x1, y1);
+            System.out.print("\n SET FLAG (yes or no):\t");
+            String flag = user.userInput();
+            if (flag.equals("yes")) {
+                System.out.print("\n ENTER FLAG CELL COORDINATES (row column):\t");
+                xy=user.userInput();
+                String[] strArr1 = xy.split("\s+");
+                newBoard.setFlag(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
+                newGameVisual.printGameBoard(newBoard);
+
+            } else if(flag.equals("no")) {
+                System.out.print("\n ENTER CELL COORDINATES (row column): \t");
+                xy = user.userInput();
+                String[] strArr1 = xy.split("\s+");
+                if (newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1])) == false) {
+                    newBoard.setAllBombsUncovered(level);
                     newGameVisual.printGameBoard(newBoard);
+                    System.out.print("\n YOU LOST \t");
+                    //RESET GAME OR NO
+                    System.out.print("\n RESET GAME? (yes or no) \t");
+                    String setReset = user.userInput();
+                    if (setReset.equals("yes")) {
+                        newBoard.reset(newBoard);
+
+                    } else {
+                        System.out.print("\n END GAME \t");
+                        break;
+                    }
+
                 }
 
-                else{
-                    System.out.println("\n ENTER CELL COORDINATES(x y):\t");
-                    int x1= sc3.nextInt();
-                    int y1= sc3.nextInt();
-                    newBoard.clickTile(x1,y1);
-                    if (newBoard.clickTile(x1,y1)==false){
-                        System.out.println("\n YOU LOST \t");}
-                    else{
-                        newGameVisual.printGameBoard(newBoard);}
+                newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
+                newGameVisual.printGameBoard(newBoard);
 
-                }
-
-
+            }
+            else if(flag!="yes"||flag!="no"){
+                System.out.print("INVALID ANSWER");
+            }
+            if (newBoard.checkForFlags(level)){
+                System.out.print("\n REMOVE FLAG (yes or no):\t");
+                String removeFlag = user.userInput();
+                if (removeFlag.equals("yes")){{
+                    System.out.print("\n REMOVE FLAG CELL COORDINATES (row column):\t");
+                    xy=user.userInput();
+                    String[] strArr1 = xy.split("\s+");
+                    newBoard.removeFlag(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
+                    newGameVisual.printGameBoard(newBoard);
+                }}
+            }
             }
 
 
         }
-
     }
 
-}
+

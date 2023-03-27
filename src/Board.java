@@ -14,6 +14,7 @@ public class Board {
         this.nrOfBombs=nrOfBombs;
         this.nrOfRows =height;
         this.nrOfColumns =length;
+
         grid = new Tile[height][length];
         for (int i=0; i<height; i++){
             for (int j=0; j<length; j++){
@@ -75,7 +76,7 @@ public class Board {
     }
 
 
-    public void reset(){
+    public void reset(Board newBoard){
         for (int row = 0; row< nrOfRows; row++) {
             for (int column = 0; column < nrOfColumns; column++) {
                 grid[row][column].setTileStatus("covered");
@@ -86,6 +87,7 @@ public class Board {
     //returns false when clicked on a mine, else returns true
     public boolean clickTile(int row, int column){
         if (grid[row-1][column-1].getHasMine()) {
+            grid[row - 1][column - 1].setTileStatus("covered");
             return false;
         }
         //still implement
@@ -123,6 +125,7 @@ public class Board {
 
     //add to the arraylist the coordinates of clicked tile
     public void allocateBombs(int selectedRow, int selectedColumn){
+
         ArrayList<String> tileNrs = new ArrayList<String>();
         tileNrs.add(String.valueOf(selectedRow+selectedColumn));
         for (int i=0; i<nrOfBombs;i++) {
@@ -139,7 +142,6 @@ public class Board {
             tileNrs.add(String.valueOf(row + column));
             grid[row][column].setHasMine();
             //only to make them visible for now
-            grid[row][column].setTileStatus("uncovered");
         }
     }
 
@@ -165,13 +167,30 @@ public class Board {
     }
 
     //for testing set all tiles uncovered
-    public void setAllUncovered() {
+    public void setAllBombsUncovered(String level) {
+        Board newBoard=new Board(level);
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
-                grid[row][column].setTileStatus("uncovered");
+               if( grid[row][column].getHasMine()){
+                 grid[row][column].setTileStatus("uncovered");
             }
+               else{
+                   grid[row][column].setTileStatus("covered");
+               }
         }
-    }
+    }}
+
+    public boolean checkForFlags(String level){
+        Board newBoard=new Board(level);
+        for (int row=0;row<nrOfRows;row++) {
+            for (int column=0; column<nrOfColumns;column++) {
+                if( grid[row][column].getTileStatus().equals("flagged")){
+                    return true;
+                }
+            }}
+        return false;
+    }}
+
 
     //recursive function????
-}
+
