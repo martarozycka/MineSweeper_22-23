@@ -167,21 +167,37 @@ public class Board {
     }
 
     //for testing set all tiles uncovered
-    public void setAllBombsUncovered(String level) {
-        Board newBoard=new Board(level);
+    public void setAllUncovered() {
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
-               if( grid[row][column].getHasMine()){
                  grid[row][column].setTileStatus("uncovered");
-            }
-               else{
-                   grid[row][column].setTileStatus("covered");
-               }
-        }
-    }}
 
-    public boolean checkForFlags(String level){
-        Board newBoard=new Board(level);
+    }}}
+    public void setAllBombsUncovered() {
+        for (int row=0;row<nrOfRows;row++) {
+            for (int column=0; column<nrOfColumns;column++) {
+                if( grid[row][column].getHasMine()){
+                    grid[row][column].setTileStatus("uncovered");
+                }
+                else{
+                    grid[row][column].setTileStatus("covered");
+                }
+            }
+        }}
+
+    //check for win not finished
+    public boolean checkBoard(){
+        for (int row=0;row<nrOfRows;row++) {
+            for (int column=0; column<nrOfColumns;column++) {
+                if( !grid[row][column].getHasMine()){
+                    if (grid[row][column].getTileStatus().equals("uncovered") || grid[row][column].getTileStatus().equals("flagged") ){
+                    return true;}
+                }
+            }}
+        return false;
+    }
+
+    public boolean checkForFlags(){
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
                 if( grid[row][column].getTileStatus().equals("flagged")){
