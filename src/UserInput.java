@@ -27,7 +27,7 @@ public class UserInput {
     public static void main(String[] args) {
         UserInput user = new UserInput();
 
-        System.out.println("ENTER LEVEL(easy, medium, difficult): ");
+        System.out.println("ENTER LEVEL(easy, medium, hard): ");
         String level = user.userInput();
         Board newBoard = new Board(level);
         GameVisual newGameVisual = new GameVisual(newBoard);

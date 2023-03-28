@@ -18,7 +18,7 @@ public class Tile {
                 value = "\uD83D\uDCA3 ";
             }
             else {
-                value = String.valueOf(neighbourMineCount + "  ");
+                value = String.valueOf(" " +neighbourMineCount + "  ");
             }
         }
         return value;

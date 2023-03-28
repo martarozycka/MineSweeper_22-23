@@ -8,17 +8,89 @@ public class GameVisual {
         Tile[][] grid = board.getGrid();
         int verticalIndex = 1;
         for (int i = 0; i<board.getNrOfRows(); i++) {
-            System.out.print(verticalIndex + "  ");
+            if (verticalIndex<10) {
+                System.out.print(verticalIndex + "   ");
+            }
+            else {
+                System.out.print(verticalIndex + "  ");
+            }
             verticalIndex++;
             for (int j = 0; j< board.getNrOfColumns(); j++) {
                 System.out.print(grid[i][j].returnValue());
             }
             System.out.println();
         }
-        System.out.print("    ");
+        System.out.print("     ");
         for (int l = 1; l<= board.getNrOfColumns(); l++) {
-            System.out.print(l + "  ");
-            ;
+            if (l<10) {
+                System.out.print(l+"  ");
+                if (l==3) {
+                    System.out.print("\u2009");
+                }
+                if (l==4) {
+                    System.out.print("\u2009");
+                }
+                if (l==5) {
+                    System.out.print("\u2009");
+                }
+                if (l==6) {
+                    System.out.print("\u2009");
+                }
+                if (l==8) {
+                    System.out.print("\u2009");
+                }
+            }
+            else {
+                System.out.print(l +" ");
+                if (l==11) {
+                    System.out.print("\u2009");
+                }
+                if (l==13) {
+                    System.out.print("\u2009");
+                }
+                if (l==14) {
+                    System.out.print("\u2009");
+                }
+                if (l==15) {
+                    System.out.print("\u2009");
+                }
+                if (l==16) {
+                    System.out.print("\u2009");
+                }
+                if (l==17) {
+                    System.out.print("\u2009");
+                }
+                if (l==18) {
+                    System.out.print("\u2009");
+                }
+                if (l==19) {
+                    System.out.print("\u2009");
+                }
+                if (l==21) {
+                    System.out.print("\u2009");
+                }
+                if (l==22) {
+                    System.out.print("\u2009");
+                }
+                if (l==23) {
+                    System.out.print("\u2009");
+                }
+                if (l==25) {
+                    System.out.print("\u2009");
+                }
+                if (l==26) {
+                    System.out.print("\u2009");
+                }
+                if (l==27) {
+                    System.out.print("\u2009");
+                }
+                if (l==28) {
+                    System.out.print("\u2009");
+                }
+                if (l==29) {
+                    System.out.print("\u2009");
+                }
+            }
         }
     }
 

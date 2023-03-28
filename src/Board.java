@@ -82,7 +82,19 @@ public class Board {
                 grid[row][column].setTileStatus("covered");
             }
         }
+
     }
+
+//    public void reset(int selectedRow, int selectedColumn) {
+//        for (int row = 0; row< nrOfRows; row++) {
+//            for (int column = 0; column < nrOfColumns; column++) {
+//                grid[row][column].setTileStatus("covered");
+//                grid[row][column].setDoesNotHaveMine();
+//            }
+//        }
+//        allocateBombs(selectedRow, selectedColumn);
+//        setNeighbouringMineCounter();
+//    }
 
     //returns false when clicked on a mine, else returns true
     public boolean clickTile(int row, int column){
