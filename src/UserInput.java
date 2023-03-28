@@ -87,10 +87,10 @@ public class UserInput {
             }
 
             //check if won
-            else if (newBoard.checkBoard()==true ){
-                System.out.print("\n YOU WON \t");
-                break;
-            }
+//            else if (newBoard.checkBoard()==true ){
+//                System.out.print("\n YOU WON \t");
+//                break;
+//            }
 
 //            else if(!flag.equals("yes") || !flag.equals("no")){
 //                System.out.print("\n INVALID ANSWER \t");
@@ -115,4 +115,4 @@ public class UserInput {
         }
     }}
 
-//invalid answer fro flag and remove flag does not work and won does not work checkkkkk
+//invalid answer for flag and remove flag does not work and won does not work checkkkkk

@@ -86,33 +86,45 @@ public class Board {
 
     //returns false when clicked on a mine, else returns true
     public boolean clickTile(int row, int column){
+        //mine tile
         if (grid[row-1][column-1].getHasMine()) {
-            grid[row - 1][column - 1].setTileStatus("covered");
+            grid[row - 1][column - 1].setTileStatus("uncovered");
             return false;
         }
-        //still implement
+        //0 tile
+        //if we get into next 0, call recursiveOpen
         else if (grid[row-1][column-1].getNeighbourMineCount() == 0) {
             grid[row - 1][column - 1].setTileStatus("uncovered");
-//            for (int y: distanceY) {
-//                for (int x : distanceX) {
-//                    if (row+y>=0 & row+y<nrOfColumns & column+x>=0 & column+x<nrOfColumns) {
-//                        if (x!=0 || y!=0) {
-//                            if (!grid[row+y][column+x].getHasMine()) {
-//                                clickTile(row+y, column+y);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            recursiveOpen(row-1, column-1);
             return true;}
+        //number tile
         else {
             grid[row - 1][column - 1].setTileStatus("uncovered");
             return true;
         }
     }
-
+//seems like doesn't come back to the loop after getting to a numbered tile in the recursion
     public void recursiveOpen(int row, int column) {
-
+        for (int x: distanceX) {
+                for (int y : distanceY) {
+                    if ((row+y>=0 && row+y<nrOfColumns) && (column+x>=0 && column+x<nrOfColumns)) {
+                        if (x!=0 || y!=0) {
+                            if (!grid[row+y][column+x].getHasMine()) {
+                                if (!grid[row+y][column+x].getTileStatus().equals("uncovered") && !grid[row+y][column+x].getTileStatus().equals("flagged")) {
+                                    if (grid[row + y][column + x].getNeighbourMineCount() != 0) {
+                                        grid[row + y][column + x].setTileStatus("uncovered");
+                                        //System.out.println(row+y + " " + column + x + ", value: " + grid[row + y][column + x].getNeighbourMineCount());
+                                    } else if (grid[row + y][column + x].getNeighbourMineCount() == 0) {
+                                        grid[row + y][column + x].setTileStatus("uncovered");
+                                        //System.out.println(row+y + " " + column+x + ", value: " + grid[row + y][column + x].getNeighbourMineCount());
+                                        recursiveOpen(row+y,column+x);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
     }
 
     public void setFlag(int row, int column){
