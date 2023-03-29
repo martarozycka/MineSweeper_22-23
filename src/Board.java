@@ -13,11 +13,14 @@ public class Board {
     private int[] distanceX = {-1, 0, 1};
     private int[] distanceY = {-1, 0, 1};
 
+    ArrayList<String> tileNrs;
+
     public Board(int nrOfBombs, int height, int length){
         this.nrOfBombs=nrOfBombs;
         this.nrOfRows =height;
         this.nrOfColumns =length;
         this.nrOfMiniBombs = nrOfBombs/4;
+        ArrayList<String> tileNrs = new ArrayList<String>();
         //check if rounds up
 
         grid = new Tile[height][length];
@@ -29,6 +32,7 @@ public class Board {
     }
 
     public Board(String level) {
+        ArrayList<String> tileNrs = new ArrayList<String>();
         if (level.equals("medium")) {
             nrOfBombs = 40;
             nrOfMiniBombs = 10;
@@ -155,14 +159,13 @@ public class Board {
     //add to the arraylist the coordinates of clicked tile
     public void allocateBombs(int selectedRow, int selectedColumn){
 
-        ArrayList<String> tileNrs = new ArrayList<String>();
         tileNrs.add(String.valueOf(selectedRow+selectedColumn));
         Random rand = new Random();
         for (int i=0; i<nrOfBombs;i++) {
             int row = rand.nextInt(nrOfRows);
             int column = rand.nextInt(nrOfColumns);
 
-            while (tileNrs.contains(String.valueOf(row+column))) {
+            while (tileNrs.contains(String.valueOf(row+column)) || (row==selectedRow && column==selectedColumn)) {
                 row = rand.nextInt(nrOfRows);
                 while (tileNrs.contains(String.valueOf(row+column))) {
                     column = rand.nextInt(nrOfColumns);
@@ -175,20 +178,38 @@ public class Board {
             //only to make them visible for now
         }
         //allocate mini bombs
-        for (int j=0; j<nrOfMiniBombs;j++) {
-            //Random rand = new Random();
-            int row1 = rand.nextInt(nrOfRows);
-            int column1 = rand.nextInt(nrOfColumns);
+//        for (int j=0; j<nrOfMiniBombs;j++) {
+//            //Random rand = new Random();
+//            int row1 = rand.nextInt(nrOfRows);
+//            int column1 = rand.nextInt(nrOfColumns);
+//
+//            while (tileNrs.contains(String.valueOf(row1+column1))) {
+//                row1= rand.nextInt(nrOfRows);
+//                while (tileNrs.contains(String.valueOf(row1+column1))) {
+//                    column1 = rand.nextInt(nrOfColumns);
+//                }
+//            }
+//            tileNrs.add(String.valueOf(row1 + column1));
+//            grid[row1][column1].setHasMiniMine();
+//            grid[row1][column1].setTileStatus("covered");
+            //only to make them visible for now
+        //}
+    }
 
-            while (tileNrs.contains(String.valueOf(row1+column1))) {
-                row1= rand.nextInt(nrOfRows);
-                while (tileNrs.contains(String.valueOf(row1+column1))) {
-                    column1 = rand.nextInt(nrOfColumns);
+    public void allocateMiniBombs(){
+        Random rand = new Random();
+        for (int i=0; i<nrOfMiniBombs;i++) {
+            int row = rand.nextInt(nrOfRows);
+            int column = rand.nextInt(nrOfColumns);
+            while (tileNrs.contains(String.valueOf(row+column))) {
+                row = rand.nextInt(nrOfRows);
+                while (tileNrs.contains(String.valueOf(row+column))) {
+                    column = rand.nextInt(nrOfColumns);
                 }
             }
-            tileNrs.add(String.valueOf(row1 + column1));
-            grid[row1][column1].setHasMiniMine();
-            grid[row1][column1].setTileStatus("covered");
+            tileNrs.add(String.valueOf(row + column));
+            grid[row][column].setHasMiniMine();
+            grid[row][column].setTileStatus("covered");
             //only to make them visible for now
         }
     }
