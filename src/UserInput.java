@@ -53,6 +53,7 @@ public class UserInput {
         //newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newBoard.allocateMiniBombs();
         newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
+        newBoard.allocateMiniBombs();
         newBoard.setNeighbouringMineCounter();
         newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newGameVisual.printGameBoard(newBoard);
@@ -103,7 +104,6 @@ public class UserInput {
                     String setReset = user.userInput();
                     if (setReset.equals("yes")) {
                         newBoard.reset(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
-
                     } else {
                         System.out.print("\n END GAME \t");
                         break;
