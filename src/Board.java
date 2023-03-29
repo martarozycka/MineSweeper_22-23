@@ -96,8 +96,11 @@ public class Board {
                 grid[row][column].setDoesNotHaveMiniMine();
             }
         }
+        allocateMiniBombs();
         allocateBombs(selectedRow, selectedColumn);
         setNeighbouringMineCounter();
+        clickTile(selectedRow,selectedColumn);
+
     }
 
     //returns false when clicked on a mine, else returns true
@@ -177,7 +180,9 @@ public class Board {
             grid[row][column].setHasMine();
             grid[row][column].setTileStatus("covered");
             //only to make them visible for now
-        }
+        }}
+
+
         //allocate mini bombs
 //        for (int j=0; j<nrOfMiniBombs;j++) {
 //            //Random rand = new Random();
@@ -195,7 +200,7 @@ public class Board {
 //            grid[row1][column1].setTileStatus("covered");
             //only to make them visible for now
         //}
-    }
+
 
     public void allocateMiniBombs(){
         ArrayList<String> tileNrs = new ArrayList<String>();
@@ -223,7 +228,7 @@ public class Board {
                 int mineCounter = 0;
                 for (int y : distanceY) {
                     for (int x : distanceX) {
-                        if (row+y>=0 & row+y<nrOfColumns & column+x>=0 & column+x<nrOfRows) {
+                        if (row+y>=0 && row+y<nrOfColumns && column+x>=0 && column+x<nrOfRows) {
                             if  (x!=0 || y!=0) {
                                 if (grid[row+y][column+x].getHasMine()) {
                                     mineCounter++;

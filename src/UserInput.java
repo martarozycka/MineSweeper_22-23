@@ -19,8 +19,6 @@ public class UserInput {
     }
 
 
-
-
     public static void main(String[] args) {
         UserInput user = new UserInput();
         System.out.println("\n Customize(yes or no): \t");
@@ -53,7 +51,6 @@ public class UserInput {
         //newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newBoard.allocateMiniBombs();
         newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
-        newBoard.allocateMiniBombs();
         newBoard.setNeighbouringMineCounter();
         newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newGameVisual.printGameBoard(newBoard);
@@ -103,7 +100,13 @@ public class UserInput {
                     System.out.print("\n RESET GAME? (yes or no) \t");
                     String setReset = user.userInput();
                     if (setReset.equals("yes")) {
-                        newBoard.reset(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
+                        newBoard.setAllCovered();
+                        newGameVisual.printGameBoard(newBoard);
+                        System.out.print("\n ENTER CELL COORDINATES (row column): \t");
+                        xy = user.userInput();
+                        String[] strArr2 = xy.split("\s+");
+                        newBoard.reset(Integer.parseInt(strArr2[0]), Integer.parseInt(strArr2[1]));
+                        newGameVisual.printGameBoard(newBoard);
                     } else {
                         System.out.print("\n END GAME \t");
                         break;
