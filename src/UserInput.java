@@ -106,7 +106,6 @@ public class UserInput {
                         xy = user.userInput();
                         String[] strArr2 = xy.split("\s+");
                         newBoard.reset(Integer.parseInt(strArr2[0]), Integer.parseInt(strArr2[1]));
-                        newGameVisual.printGameBoard(newBoard);
                     } else {
                         System.out.print("\n END GAME \t");
                         break;
