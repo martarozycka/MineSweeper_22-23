@@ -17,6 +17,33 @@ public class Tile {
             if (hasMine) {
                 value = "\uD83D\uDCA3 ";
             }
+            else if (neighbourMineCount==1) {
+                value = "1️ ";
+            }
+            else if (neighbourMineCount==2) {
+                value = "2️ ";
+            }
+            else if (neighbourMineCount==3) {
+                value = "3️ ";
+            }
+            else if (neighbourMineCount==4) {
+                value = "4️ ";
+            }
+            else if (neighbourMineCount==5) {
+                value = "5️ ";
+            }
+            else if (neighbourMineCount==6) {
+                value = "6️ ";
+            }
+            else if (neighbourMineCount==7) {
+                value = "7️ ";
+            }
+            else if (neighbourMineCount==8) {
+                value = "8️ ";
+            }
+            else if (neighbourMineCount==0) {
+                value = "⬜ ";
+            }
             else {
                 value = String.valueOf(" " +neighbourMineCount + "  ");
             }
