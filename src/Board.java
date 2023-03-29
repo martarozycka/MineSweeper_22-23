@@ -157,8 +157,8 @@ public class Board {
 
         ArrayList<String> tileNrs = new ArrayList<String>();
         tileNrs.add(String.valueOf(selectedRow+selectedColumn));
+        Random rand = new Random();
         for (int i=0; i<nrOfBombs;i++) {
-            Random rand = new Random();
             int row = rand.nextInt(nrOfRows);
             int column = rand.nextInt(nrOfColumns);
 
@@ -176,7 +176,7 @@ public class Board {
         }
         //allocate mini bombs
         for (int j=0; j<nrOfMiniBombs;j++) {
-            Random rand = new Random();
+            //Random rand = new Random();
             int row1 = rand.nextInt(nrOfRows);
             int column1 = rand.nextInt(nrOfColumns);
 
