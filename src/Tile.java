@@ -2,6 +2,7 @@ public class Tile {
     private String tileStatus;
     private boolean hasMine;
     private int neighbourMineCount;
+    private boolean hasMiniMine;
 
     public Tile(){
         tileStatus = "covered";
@@ -16,6 +17,9 @@ public class Tile {
         else if (tileStatus.equals("uncovered")) {
             if (hasMine) {
                 value = "\uD83D\uDCA3 ";
+            }
+            else if (hasMiniMine) {
+                value = "\uD83D\uDC94 ";
             }
             else if (neighbourMineCount==1) {
                 value = "1️ ";
@@ -44,9 +48,9 @@ public class Tile {
             else if (neighbourMineCount==0) {
                 value = "⬜ ";
             }
-            else {
-                value = String.valueOf(" " +neighbourMineCount + "  ");
-            }
+//            else {
+//                value = String.valueOf(" " +neighbourMineCount + "  ");
+//            }
         }
         return value;
     }
@@ -66,9 +70,20 @@ public class Tile {
     public void setHasMine() {
         this.hasMine = true;
     }
-
     public void setDoesNotHaveMine() {
         this.hasMine = false;
+    }
+
+    public boolean getHasMiniMine() {
+        return hasMiniMine;
+    }
+
+    public void setHasMiniMine() {
+        this.hasMiniMine = true;
+    }
+
+    public void setDoesNotHaveMiniMine() {
+        this.hasMiniMine = false;
     }
 
     public int getNeighbourMineCount() {

@@ -61,6 +61,9 @@ public class UserInput {
                  if (newBoard.checkBoard()){
                      newGameVisual.printGameBoard(newBoard);
                      System.out.print("\n YOU WON \t");
+                     int miniMinesOpen = newBoard.checkedMiniMine();
+                     //int score = 100 - ___ /6 - miniMinesOpen;
+                     //System.out.print("\n" + score + "\t");
                     break;
                 }
 
