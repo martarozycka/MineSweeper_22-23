@@ -76,25 +76,25 @@ public class Board {
     }
 
 
-    public void reset(Board newBoard){
-        for (int row = 0; row< nrOfRows; row++) {
-            for (int column = 0; column < nrOfColumns; column++) {
-                grid[row][column].setTileStatus("covered");
-            }
-        }
-
-    }
-
-//    public void reset(int selectedRow, int selectedColumn) {
+//    public void reset(Board newBoard){
 //        for (int row = 0; row< nrOfRows; row++) {
 //            for (int column = 0; column < nrOfColumns; column++) {
 //                grid[row][column].setTileStatus("covered");
-//                grid[row][column].setDoesNotHaveMine();
 //            }
 //        }
-//        allocateBombs(selectedRow, selectedColumn);
-//        setNeighbouringMineCounter();
+//
 //    }
+
+    public void reset(int selectedRow, int selectedColumn) {
+        for (int row = 0; row< nrOfRows; row++) {
+            for (int column = 0; column < nrOfColumns; column++) {
+                grid[row][column].setTileStatus("covered");
+                grid[row][column].setDoesNotHaveMine();
+            }
+        }
+        allocateBombs(selectedRow, selectedColumn);
+        setNeighbouringMineCounter();
+    }
 
     //returns false when clicked on a mine, else returns true
     public boolean clickTile(int row, int column){
@@ -165,6 +165,7 @@ public class Board {
             }
             tileNrs.add(String.valueOf(row + column));
             grid[row][column].setHasMine();
+            grid[row][column].setTileStatus("covered");
             //only to make them visible for now
         }
     }
@@ -186,15 +187,16 @@ public class Board {
                     }
                 }
                 grid[row][column].setNeighbourMineCount(mineCounter);
+                grid[row][column].setTileStatus("covered");
             }
         }
     }
 
     //for testing set all tiles uncovered
-    public void setAllUncovered() {
+    public void setAllCovered() {
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
-                 grid[row][column].setTileStatus("uncovered");
+                 grid[row][column].setTileStatus("covered");
 
     }}}
     public void setAllBombsUncovered() {
@@ -203,23 +205,10 @@ public class Board {
                 if( grid[row][column].getHasMine()){
                     grid[row][column].setTileStatus("uncovered");
                 }
-                else{
-                    grid[row][column].setTileStatus("covered");
-                }
             }
         }}
 
-    //check for win not finished
-    public boolean checkBoard(){
-        for (int row=0;row<nrOfRows;row++) {
-            for (int column=0; column<nrOfColumns;column++) {
-                if( !grid[row][column].getHasMine()){
-                    if (grid[row][column].getTileStatus().equals("uncovered") || grid[row][column].getTileStatus().equals("flagged") ){
-                    return true;}
-                }
-            }}
-        return false;
-    }
+
 
     public boolean checkForFlags(){
         for (int row=0;row<nrOfRows;row++) {
@@ -229,7 +218,36 @@ public class Board {
                 }
             }}
         return false;
-    }}
+    }
+
+    public int  countingOpenCells(){
+        int count=0;
+        for (int row=0;row<nrOfRows;row++) {
+            for (int column=0; column<nrOfColumns;column++) {
+                if( grid[row][column].getTileStatus().equals("uncovered")){
+                    count=count+1;
+                }
+            }}
+        return count;
+    }
+
+    public boolean checkBoard(){
+        for (int row=0;row<nrOfRows;row++) {
+            for (int column=0; column<nrOfColumns;column++) {
+             if (this.countingOpenCells()==(nrOfColumns*nrOfRows)-nrOfBombs){
+                 return true;
+                    }
+                }
+            }
+        return false;
+    }
+
+
+
+    }
+
+
+
 
 
     //recursive function????

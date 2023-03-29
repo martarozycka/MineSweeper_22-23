@@ -17,9 +17,6 @@ public class UserInput {
         String userInput=sc.nextLine();
         return userInput;
     }
-    public void lose(){
-        System.out.println("YOU LOST");
-    }
 
 
 
@@ -36,15 +33,11 @@ public class UserInput {
         System.out.print("\n ENTER CELL COORDINATES (row column):\t");
         String xy = user.userInput();
         String[] strArr = xy.split("\s+");
+
+
+        newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newBoard.setNeighbouringMineCounter();
-
-        //checking if first click is a bomb
-        while(!newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]))){
-            newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
-            newBoard.setNeighbouringMineCounter();
-            newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
-        }
         newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newGameVisual.printGameBoard(newBoard);
         //game continues till a bomb is uncovered
@@ -64,7 +57,14 @@ public class UserInput {
                 System.out.print("\n ENTER CELL COORDINATES (row column): \t");
                 xy = user.userInput();
                 String[] strArr1 = xy.split("\s+");
-                if (newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1])) == false) {
+                newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
+                 if (newBoard.checkBoard()){
+                     newGameVisual.printGameBoard(newBoard);
+                     System.out.print("\n YOU WON \t");
+                    break;
+                }
+
+                else if (newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1])) == false) {
                     newBoard.setAllBombsUncovered();
                     newGameVisual.printGameBoard(newBoard);
                     System.out.print("\n YOU LOST \t");
@@ -72,7 +72,7 @@ public class UserInput {
                     System.out.print("\n RESET GAME? (yes or no) \t");
                     String setReset = user.userInput();
                     if (setReset.equals("yes")) {
-                        newBoard.reset(newBoard);
+                        newBoard.reset(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
 
                     } else {
                         System.out.print("\n END GAME \t");
@@ -80,17 +80,11 @@ public class UserInput {
                     }
 
                 }
-
-                newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
                 newGameVisual.printGameBoard(newBoard);
 
             }
 
-            //check if won
-//            else if (newBoard.checkBoard()==true ){
-//                System.out.print("\n YOU WON \t");
-//                break;
-//            }
+
 
 //            else if(!flag.equals("yes") || !flag.equals("no")){
 //                System.out.print("\n INVALID ANSWER \t");
@@ -111,8 +105,9 @@ public class UserInput {
                     newGameVisual.printGameBoard(newBoard);
                 }}
             }
-
         }
+
+
     }}
 
 //invalid answer for flag and remove flag does not work and won does not work checkkkkk
