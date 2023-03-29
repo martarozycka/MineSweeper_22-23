@@ -51,6 +51,7 @@ public class UserInput {
 
 
         //newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
+        newBoard.allocateMiniBombs();
         newBoard.allocateBombs(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
         newBoard.setNeighbouringMineCounter();
         newBoard.clickTile(Integer.parseInt(strArr[0]), Integer.parseInt(strArr[1]));
@@ -90,13 +91,13 @@ public class UserInput {
                     newGameVisual.printGameBoard(newBoard);
                     System.out.print("\n YOU LOST \t");
                     //score check
-                     int miniMinesOpen = newBoard.checkedMiniMine();
-                     long end = System.nanoTime();
-                     long elapsedTime = (end - start)/60000000;
-                     int score = (int)(100 - elapsedTime/6 - miniMinesOpen);
-                     int scoreNoMiniMines = (int)(100 - elapsedTime/6);
-                     System.out.print("\n SCORE: " + score + "\t");
-                     System.out.print("\n SCORE no minimines: " + scoreNoMiniMines + "\t");
+//                     int miniMinesOpen = newBoard.checkedMiniMine();
+//                     long end = System.nanoTime();
+//                     long elapsedTime = (end - start)/60000000;
+//                     int score = (int)(100 - elapsedTime/6 - miniMinesOpen);
+//                     int scoreNoMiniMines = (int)(100 - elapsedTime/6);
+//                     System.out.print("\n SCORE: " + score + "\t");
+//                     System.out.print("\n SCORE no minimines: " + scoreNoMiniMines + "\t");
                     //RESET GAME OR NO
                     System.out.print("\n RESET GAME? (yes or no) \t");
                     String setReset = user.userInput();

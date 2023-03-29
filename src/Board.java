@@ -13,14 +13,15 @@ public class Board {
     private int[] distanceX = {-1, 0, 1};
     private int[] distanceY = {-1, 0, 1};
 
-    ArrayList<String> tileNrs;
+    ArrayList<String> tileNrs = new ArrayList<String>();
 
     public Board(int nrOfBombs, int height, int length){
+        ArrayList<String> tileNrs = new ArrayList<String>();
         this.nrOfBombs=nrOfBombs;
         this.nrOfRows =height;
         this.nrOfColumns =length;
         this.nrOfMiniBombs = nrOfBombs/4;
-        ArrayList<String> tileNrs = new ArrayList<String>();
+        //ArrayList<String> tileNrs = new ArrayList<String>();
         //check if rounds up
 
         grid = new Tile[height][length];
@@ -158,20 +159,20 @@ public class Board {
 
     //add to the arraylist the coordinates of clicked tile
     public void allocateBombs(int selectedRow, int selectedColumn){
-
         tileNrs.add(String.valueOf(selectedRow+selectedColumn));
         Random rand = new Random();
         for (int i=0; i<nrOfBombs;i++) {
             int row = rand.nextInt(nrOfRows);
             int column = rand.nextInt(nrOfColumns);
-
-            while (tileNrs.contains(String.valueOf(row+column)) || (row==selectedRow && column==selectedColumn)) {
+            while (row==selectedRow && column==selectedColumn) {
+                row = rand.nextInt(nrOfRows);
+            }
+            while (tileNrs.contains(String.valueOf(row+column))) {
                 row = rand.nextInt(nrOfRows);
                 while (tileNrs.contains(String.valueOf(row+column))) {
                     column = rand.nextInt(nrOfColumns);
                 }
             }
-
             tileNrs.add(String.valueOf(row + column));
             grid[row][column].setHasMine();
             grid[row][column].setTileStatus("covered");
@@ -197,6 +198,7 @@ public class Board {
     }
 
     public void allocateMiniBombs(){
+        ArrayList<String> tileNrs = new ArrayList<String>();
         Random rand = new Random();
         for (int i=0; i<nrOfMiniBombs;i++) {
             int row = rand.nextInt(nrOfRows);
