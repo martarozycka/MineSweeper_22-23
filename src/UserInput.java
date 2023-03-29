@@ -23,10 +23,24 @@ public class UserInput {
 
     public static void main(String[] args) {
         UserInput user = new UserInput();
+        System.out.println("\n Customize(yes or no): \t");
+        String decide= user.userInput();
+        Board newBoard;
+        if (decide.equals("yes")){
+            System.out.println("\n Set (nr of bombs,row,column): \t");
+            String setCustomize = user.userInput();
+            String[] strArr0 = setCustomize.split("\s+");
+            int nrOfBombs= Integer.parseInt(strArr0[0]);
+            int row=Integer.parseInt(strArr0[1]);
+            int column=Integer.parseInt(strArr0[2]);
+            newBoard= new Board(nrOfBombs,row,column);
+        }
+        else{
 
         System.out.println("ENTER LEVEL(easy, medium, hard): ");
         String level = user.userInput();
-        Board newBoard = new Board(level);
+         newBoard = new Board(level); }
+
         GameVisual newGameVisual = new GameVisual(newBoard);
         newGameVisual.printGameBoard(newBoard);
         long start = System.nanoTime();
