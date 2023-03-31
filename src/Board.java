@@ -79,22 +79,6 @@ public class Board {
         return nrOfColumns;
     }
 
-    //reset covers all tiles, clears (mini)mine tiles, allocates (mini)mines again, sets the number tiles, clicks the tile according to user input
-    public void reset(int selectedRow, int selectedColumn) {
-        for (int row = 0; row< nrOfRows; row++) {
-            for (int column = 0; column < nrOfColumns; column++) {
-                grid[row][column].setTileStatus("covered");
-                grid[row][column].setDoesNotHaveMine();
-                grid[row][column].setDoesNotHaveMiniMine();
-            }
-        }
-        allocateMiniBombs();
-        allocateBombs(selectedRow, selectedColumn);
-        setNeighbouringMineCounter();
-        clickTile(selectedRow,selectedColumn);
-
-    }
-
     //returns false when clicked on a mine, else returns true
     //uncovers clicked tile
     //if tile is empty, trigger the recursive function
@@ -262,11 +246,11 @@ public class Board {
         return count;
     }
 
-    //
+    //it checks that all tiles are uncovered except bombs, leading to a win
     public boolean checkBoard(){
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
-             if (this.countingOpenCells()==(nrOfColumns*nrOfRows)-nrOfBombs){
+             if (this.countingOpenCells()==((nrOfColumns*nrOfRows)-nrOfBombs)){
                  return true;
                     }
                 }
