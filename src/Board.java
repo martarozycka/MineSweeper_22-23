@@ -1,7 +1,5 @@
-import java.util.ArrayList;
 import java.util.Random;
 
-import static java.lang.Math.round;
 
 public class Board {
     private Tile[][] grid;
@@ -10,19 +8,16 @@ public class Board {
     private int nrOfRows;
     private int nrOfColumns;
 
+    //arrays to check the 8 neighbouring tiles
     private int[] distanceX = {-1, 0, 1};
     private int[] distanceY = {-1, 0, 1};
 
-    ArrayList<String> tileNrs = new ArrayList<String>();
-
+    //constructor with customize option
     public Board(int nrOfBombs, int height, int length){
-        ArrayList<String> tileNrs = new ArrayList<String>();
         this.nrOfBombs=nrOfBombs;
         this.nrOfRows =height;
         this.nrOfColumns =length;
         this.nrOfMiniBombs = nrOfBombs/4;
-        //ArrayList<String> tileNrs = new ArrayList<String>();
-        //check if rounds up
 
         grid = new Tile[height][length];
         for (int i=0; i<height; i++){
@@ -32,8 +27,8 @@ public class Board {
         }
     }
 
+    //constructor with level
     public Board(String level) {
-        ArrayList<String> tileNrs = new ArrayList<String>();
         if (level.equals("medium")) {
             nrOfBombs = 40;
             nrOfMiniBombs = 10;
@@ -43,7 +38,7 @@ public class Board {
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 16; j++) {
                     grid[i][j] = new Tile();
-                    }
+                }
             }
         }
         else if (level.equals("hard")) {
@@ -76,10 +71,6 @@ public class Board {
         return grid;
     }
 
-    public int getNrOfBombs() {
-        return nrOfBombs;
-    }
-
     public int getNrOfRows() {
         return nrOfRows;
     }
@@ -88,6 +79,7 @@ public class Board {
         return nrOfColumns;
     }
 
+    //reset covers all tiles, clears (mini)mine tiles, allocates (mini)mines again, sets the number tiles, clicks the tile according to user input
     public void reset(int selectedRow, int selectedColumn) {
         for (int row = 0; row< nrOfRows; row++) {
             for (int column = 0; column < nrOfColumns; column++) {
@@ -104,18 +96,21 @@ public class Board {
     }
 
     //returns false when clicked on a mine, else returns true
+    //uncovers clicked tile
+    //if tile is empty, trigger the recursive function
     public boolean clickTile(int row, int column){
         //mine tile
         if (grid[row-1][column-1].getHasMine()) {
             grid[row - 1][column - 1].setTileStatus("uncovered");
             return false;
         }
+        //mini mine tile
         else if (grid[row-1][column-1].getHasMiniMine()) {
             grid[row - 1][column - 1].setTileStatus("uncovered");
             return true;
         }
         //0 tile
-        //if we get into next 0, call recursiveOpen
+        //call recursiveOpen
         else if (grid[row-1][column-1].getNeighbourMineCount() == 0) {
             grid[row - 1][column - 1].setTileStatus("uncovered");
             recursiveOpen(row-1, column-1);
@@ -126,21 +121,26 @@ public class Board {
             return true;
         }
     }
-//seems like doesn't come back to the loop after getting to a numbered tile in the recursion
+
+    //
     public void recursiveOpen(int row, int column) {
         for (int x: distanceX) {
                 for (int y : distanceY) {
+                    //check if we are inside the board
                     if ((row+y>=0 && row+y<nrOfColumns) && (column+x>=0 && column+x<nrOfColumns)) {
+                        //check if we are not working with the clicked tile, but its neighbours
                         if (x!=0 || y!=0) {
+                            //check that not a (mini)mine
                             if (!grid[row+y][column+x].getHasMine()) {
                                 if (!grid[row+y][column+x].getHasMiniMine()) {
                                     if (!grid[row+y][column+x].getTileStatus().equals("uncovered") && !grid[row+y][column+x].getTileStatus().equals("flagged")) {
+                                        //if numbered tile, uncovers it
                                         if (grid[row + y][column + x].getNeighbourMineCount() != 0) {
                                             grid[row + y][column + x].setTileStatus("uncovered");
-                                            //System.out.println(row+y + " " + column + x + ", value: " + grid[row + y][column + x].getNeighbourMineCount());
-                                        } else if (grid[row + y][column + x].getNeighbourMineCount() == 0) {
+                                        }
+                                        // if empty tile, triggers the recursive open again
+                                        else if (grid[row + y][column + x].getNeighbourMineCount() == 0) {
                                             grid[row + y][column + x].setTileStatus("uncovered");
-                                            //System.out.println(row+y + " " + column+x + ", value: " + grid[row + y][column + x].getNeighbourMineCount());
                                             recursiveOpen(row+y,column+x);
                                         }
                                     }
@@ -157,17 +157,14 @@ public class Board {
     }
     public void removeFlag(int row, int column){
         grid[row-1][column-1].setTileStatus("covered");
-
     }
 
-    //add to the arraylist the coordinates of clicked tile
+    //allocates the mines, if tile already has (mini)mine i-counter decreased and sets mine tile to covered
     public void allocateBombs(int selectedRow, int selectedColumn){
-        //tileNrs.add(String.valueOf(selectedRow+selectedColumn));
         Random rand = new Random();
         for (int i=0; i<nrOfBombs;i++) {
             int row = rand.nextInt(nrOfRows);
             int column = rand.nextInt(nrOfColumns);
-            //new code
             if (grid[row][column].getHasMine() || grid[row][column].getHasMiniMine()) {
                 i--;
             }
@@ -178,43 +175,11 @@ public class Board {
                 grid[row][column].setHasMine();
                 grid[row][column].setTileStatus("covered");
             }
-//            while (row==selectedRow && column==selectedColumn) {
-//                row = rand.nextInt(nrOfRows);
-//            }
-//            while (tileNrs.contains(String.valueOf(row+column))) {
-//                row = rand.nextInt(nrOfRows);
-//                while (tileNrs.contains(String.valueOf(row+column))) {
-//                    column = rand.nextInt(nrOfColumns);
-//                }
-//            }
-//            tileNrs.add(String.valueOf(row + column));
-//            grid[row][column].setHasMine();
+        }
+    }
 
-            //only to make them visible for now
-        }}
-
-
-        //allocate mini bombs
-//        for (int j=0; j<nrOfMiniBombs;j++) {
-//            //Random rand = new Random();
-//            int row1 = rand.nextInt(nrOfRows);
-//            int column1 = rand.nextInt(nrOfColumns);
-//
-//            while (tileNrs.contains(String.valueOf(row1+column1))) {
-//                row1= rand.nextInt(nrOfRows);
-//                while (tileNrs.contains(String.valueOf(row1+column1))) {
-//                    column1 = rand.nextInt(nrOfColumns);
-//                }
-//            }
-//            tileNrs.add(String.valueOf(row1 + column1));
-//            grid[row1][column1].setHasMiniMine();
-//            grid[row1][column1].setTileStatus("covered");
-            //only to make them visible for now
-        //}
-
-
+    //allocates the mini mines, if tile already has mini mine i-counter decreased and sets mini mine tile to covered
     public void allocateMiniBombs(){
-        ArrayList<String> tileNrs = new ArrayList<String>();
         Random rand = new Random();
         for (int i=0; i<nrOfMiniBombs;i++) {
             int row = rand.nextInt(nrOfRows);
@@ -226,20 +191,10 @@ public class Board {
                 grid[row][column].setHasMiniMine();
                 grid[row][column].setTileStatus("covered");
             }
-//            while (tileNrs.contains(String.valueOf(row+column))) {
-//                row = rand.nextInt(nrOfRows);
-//                while (tileNrs.contains(String.valueOf(row+column))) {
-//                    column = rand.nextInt(nrOfColumns);
-//                }
-//            }
-//            tileNrs.add(String.valueOf(row + column));
-//            grid[row][column].setHasMiniMine();
-//            grid[row][column].setTileStatus("covered");
-            //only to make them visible for now
         }
     }
 
-// works :)))
+    //sets how many mines are in the neighbourhood of the tile and covers the tile
     public void setNeighbouringMineCounter() {
         for (int row = 0; row<nrOfRows; row++) {
             for (int column = 0; column<nrOfColumns; column++) {
@@ -261,13 +216,17 @@ public class Board {
         }
     }
 
-    //for testing set all tiles uncovered
+    //covers all
     public void setAllCovered() {
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
                  grid[row][column].setTileStatus("covered");
 
-    }}}
+            }
+        }
+    }
+
+    //uncovers all
     public void setAllBombsUncovered() {
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
@@ -275,20 +234,22 @@ public class Board {
                     grid[row][column].setTileStatus("uncovered");
                 }
             }
-        }}
+        }
+    }
 
-
-
+    //checks if any flags set
     public boolean checkForFlags(){
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
                 if( grid[row][column].getTileStatus().equals("flagged")){
                     return true;
                 }
-            }}
+            }
+        }
         return false;
     }
 
+    //counts how many tiles were uncovered
     public int  countingOpenCells(){
         int count=0;
         for (int row=0;row<nrOfRows;row++) {
@@ -296,10 +257,12 @@ public class Board {
                 if( grid[row][column].getTileStatus().equals("uncovered")){
                     count=count+1;
                 }
-            }}
+            }
+        }
         return count;
     }
 
+    //
     public boolean checkBoard(){
         for (int row=0;row<nrOfRows;row++) {
             for (int column=0; column<nrOfColumns;column++) {
@@ -311,6 +274,7 @@ public class Board {
         return false;
     }
 
+    //checks how many mini mines were uncovered to calculate the score
     public int checkedMiniMine(){
         int count=0;
         for (int row=0;row<nrOfRows;row++) {

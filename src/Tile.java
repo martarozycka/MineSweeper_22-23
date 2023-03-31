@@ -9,6 +9,7 @@ public class Tile {
         neighbourMineCount = 0;
     }
 
+// determines what shown after tile uncovered
     public String returnValue() {
         String value = "\uD83D\uDD33 ";
         if (tileStatus.equals("flagged")) {
@@ -48,9 +49,6 @@ public class Tile {
             else if (neighbourMineCount==0) {
                 value = "⬜ ";
             }
-//            else {
-//                value = String.valueOf(" " +neighbourMineCount + "  ");
-//            }
         }
         return value;
     }
