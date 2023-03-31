@@ -28,6 +28,7 @@ public class UserInput {
         System.out.println("\n Customize(yes or no): \t");
         String decide= user.userInput();
         Board newBoard;
+
         if (decide.equals("yes")){
             System.out.println("\n Set (nr of bombs,row,column): \t");
             String setCustomize = user.userInput();
@@ -79,7 +80,6 @@ public class UserInput {
                 xy = user.userInput();
                 String[] strArr1 = xy.split("\s+");
                 newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1]));
-
                  //Checking if a bomb is open, leading to lose the game
 
                 if (newBoard.clickTile(Integer.parseInt(strArr1[0]), Integer.parseInt(strArr1[1])) == false) {
@@ -90,6 +90,7 @@ public class UserInput {
                     System.out.print("\n RESET GAME? (yes or no) \t");
                     String setReset = user.userInput();
                     if (setReset.equals("yes")) {
+                        newBoard.clear();
                         newBoard.setAllCovered();
                         newGameVisual.printGameBoard(newBoard);
                         System.out.print("\n ENTER CELL COORDINATES (row column): \t");
@@ -105,7 +106,7 @@ public class UserInput {
                     }
 
                 }
-                if (newBoard.checkBoard()){
+                else if (newBoard.checkBoard()){
                     newGameVisual.printGameBoard(newBoard);
                     System.out.print("\n YOU WON \t");
                     //score allocation
