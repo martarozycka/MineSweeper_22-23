@@ -273,5 +273,14 @@ public class Board {
         return count;
     }
 
+    public void clear(){
+        for (int row=0;row<nrOfRows;row++) {
+            for (int column=0; column<nrOfColumns;column++) {
+                grid[row][column].setDoesNotHaveMine();
+                grid[row][column].setDoesNotHaveMiniMine();
+            }
+        }
+    }
+
 
 }
