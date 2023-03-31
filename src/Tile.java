@@ -23,7 +23,7 @@ public class Tile {
                 value = "\uD83D\uDC94 ";
             }
             else if (neighbourMineCount==1) {
-                value = "1️ ";
+                value = "1️️ ";
             }
             else if (neighbourMineCount==2) {
                 value = "2️ ";
